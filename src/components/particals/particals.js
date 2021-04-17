@@ -11,7 +11,7 @@ const particalSettings = {
       line_linked: {
         shadow: {
           enable: true,
-          color: "#3CA9D1",
+          color: "#66FCF7",
           blur: 0
         }
       }

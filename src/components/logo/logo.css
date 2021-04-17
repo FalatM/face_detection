@@ -1,4 +1,4 @@
 #tiltLogo {
-    background-image: linear-gradient(89deg, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-   
+    background-image: linear-gradient(to top right, #45a29e, #4db8b3, #55cec9, #5ee5e0, #66fcf7);
+    opacity: .5;   
 }
