@@ -8,3 +8,14 @@
     justify-content: center;
     cursor: pointer;
 }
+
+#concept_name {
+    color: blue;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+#concept_prediction {
+    color: blue;
+    font-weight: bold;
+}

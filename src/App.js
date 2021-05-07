@@ -27,6 +27,7 @@ class App extends Component {
       input: '',
       imageURL: '',
       box: {},
+      value: '',
       route: 'SignIn',
       isSignedIn: false
     }
@@ -36,14 +37,18 @@ class App extends Component {
   calculateFaceLocation = (data) => {
     console.log(data);
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    const predictionValue = data.outputs[0].data.regions[0].value
     const image = document.getElementById('inputimage')
     const height = Number(image.height);
     const width = Number(image.width);
+    console.log(clarifaiFace)
+    console.log(predictionValue);
     return{
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
       rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
+      bottomRow: height - (clarifaiFace.bottom_row * height),
+      value: predictionValue
     }
   }
 
@@ -77,7 +82,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, imageURL, route, box } = this.state;
+    const { isSignedIn, imageURL, route, box, value } = this.state;
     return (
       <div className="App">
         <Particles className='particals' 
@@ -91,7 +96,7 @@ class App extends Component {
                 onInputChange={this.onInputChange} 
                 onSubmit={this.onSubmit} 
               />
-              <FaceDetection box={box} imageURL={imageURL} />
+              <FaceDetection box={box} imageURL={imageURL} value={value} />
             </div>
           : (
             this.state.route === 'SignIn'
