@@ -11,11 +11,10 @@
 
 #concept_name {
     color: blue;
-    font-family: monospace;
     font-weight: bold;
 }
 
-#concept_prediction {
-    color: blue;
+#predictionValue {
+    color: white;
     font-weight: bold;
 }

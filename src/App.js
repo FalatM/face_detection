@@ -27,7 +27,7 @@ class App extends Component {
       input: '',
       imageURL: '',
       box: {},
-      value: '',
+      predictionValue: '',
       route: 'SignIn',
       isSignedIn: false
     }
@@ -41,23 +41,26 @@ class App extends Component {
     const image = document.getElementById('inputimage')
     const height = Number(image.height);
     const width = Number(image.width);
-    console.log(clarifaiFace)
+    console.log(clarifaiFace);
     console.log(predictionValue);
     return{
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
       rightCol: width - (clarifaiFace.right_col * width),
       bottomRow: height - (clarifaiFace.bottom_row * height),
-      value: predictionValue
+      predictionValue
     }
   }
+  
+  
+  
 
   displayFaceBox = (box) => {
     this.setState({box});
   }
 
   onInputChange = (event) => {
-    this.setState({input: event.target.value})
+    this.setState({input: event.target.value});
   }
 
   onSubmit = () => {
@@ -68,7 +71,7 @@ class App extends Component {
         Clarifai.FACE_DETECT_MODEL,
         this.state.input)
       .then(responce => this.displayFaceBox(this.calculateFaceLocation(responce)))
-      .catch(err => console.log(err));
+      .catch(TypeError => alert("Oh no! It looks like we can't find a face in this image...")).catch(err => alert(err));
     
   }
 
@@ -82,7 +85,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, imageURL, route, box, value } = this.state;
+    const { isSignedIn, imageURL, route, box } = this.state;
     return (
       <div className="App">
         <Particles className='particals' 
@@ -96,7 +99,7 @@ class App extends Component {
                 onInputChange={this.onInputChange} 
                 onSubmit={this.onSubmit} 
               />
-              <FaceDetection box={box} imageURL={imageURL} value={value} />
+              <FaceDetection box={box} imageURL={imageURL} />
             </div>
           : (
             this.state.route === 'SignIn'
