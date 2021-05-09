@@ -37,18 +37,23 @@ class App extends Component {
   calculateFaceLocation = (data) => {
     console.log(data);
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
-    const predictionValue = data.outputs[0].data.regions[0].value
+    const pValue = data.outputs[0].data.regions[0].value || " "
+    const name = data.outputs[0].model.name
+    const id = data.outputs[0].data.regions[0].id
     const image = document.getElementById('inputimage')
     const height = Number(image.height);
     const width = Number(image.width);
-    console.log(clarifaiFace);
-    console.log(predictionValue);
+    // console.log(clarifaiFace);
+    console.log(pValue);
+    console.log(name)
     return{
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
       rightCol: width - (clarifaiFace.right_col * width),
       bottomRow: height - (clarifaiFace.bottom_row * height),
-      predictionValue
+      predictionValue: pValue * 100,
+      name,
+      id
     }
   }
   
