@@ -33,6 +33,7 @@ class App extends Component {
     }
   }
 
+  
 
   calculateFaceLocation = (data) => {
     console.log(data);
