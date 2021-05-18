@@ -21,9 +21,11 @@ class SignIn extends React.Component {
         this.setState({signInPassword: event.target.value})
     }
 
-    onSubmintSignIn = () => {
+    onSubmintSignIn = (event) => {
+        event.preventDefault()
         fetch('http://localhost:3000/signIn', {
             method: 'post',
+            mode: 'cors',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 email: this.state.signInEmail,
@@ -31,7 +33,8 @@ class SignIn extends React.Component {
             })
         }).then(responce => responce.json())
         .then(data => {
-            if (data === 'Success') {
+            console.log(data);
+            if (data === 'Success!') {
                 this.props.OnRouteChange('home');
             }
         })
