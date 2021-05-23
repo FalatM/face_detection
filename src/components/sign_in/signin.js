@@ -1,4 +1,5 @@
 // import { render } from '@testing-library/react';
+// import userEvent from '@testing-library/user-event';
 import React from 'react';
 import '../ImageLinkForm/ImageLinkForm.css';
 
@@ -32,9 +33,10 @@ class SignIn extends React.Component {
                 password: this.state.signInPassword
             })
         }).then(responce => responce.json())
-        .then(data => {
-            console.log(data);
-            if (data === 'Success!') {
+        .then(user => {
+            console.log(user);
+            if (user.id){
+                this.props.loadUser(user);
                 this.props.OnRouteChange('home');
             }
         })
