@@ -93,7 +93,22 @@ class App extends Component {
     app.models.predict(
         Clarifai.FACE_DETECT_MODEL,
         this.state.input)
-      .then(responce => this.displayFaceBox(this.calculateFaceLocation(responce)))
+      .then(responce => {
+        if (responce) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          }).then(responce => responce.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }))
+              
+            })
+        }
+        this.displayFaceBox(this.calculateFaceLocation(responce))
+      })
       .catch(TypeError => alert("Oh no! It looks like we can't find a face in this image...")).catch(err => alert(err));
     
   }
@@ -115,7 +130,7 @@ class App extends Component {
                 params={particalSettings} />
         <Navigation isSignedIn={isSignedIn} OnRouteChange={this.OnRouteChange} />
         { route === 'home'
-          ? <div>
+            ? <div>
               <Logo />
               <Rank name={this.state.user.name} entries={this.state.user.entries}/> 
               <ImageLinkForm 
@@ -126,7 +141,7 @@ class App extends Component {
             </div>
           : (
             this.state.route === 'SignIn'
-            ? <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+            ? <SignIn loadUser={this.loadUser} OnRouteChange={this.OnRouteChange}/>
             : <Register loadUser={this.loadUser} OnRouteChange={this.OnRouteChange}/>
 
           )

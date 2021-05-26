@@ -33,12 +33,12 @@ class SignIn extends React.Component {
                 password: this.state.signInPassword
             })
         }).then(responce => responce.json())
-        .then(user => {
-            console.log(user);
-            if (user.id){
-                this.props.loadUser(user);
-                this.props.OnRouteChange('home');
-            }
+            .then(user => {
+                console.log(user);
+                if (user.id){
+                    this.props.loadUser(user)
+                    this.props.OnRouteChange('home');
+                } 
         })
         
     }
