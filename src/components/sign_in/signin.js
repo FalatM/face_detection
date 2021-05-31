@@ -22,7 +22,8 @@ class SignIn extends React.Component {
         this.setState({signInPassword: event.target.value})
     }
 
-    onSubmintSignIn = () => {
+    onSubmintSignIn = (event) => {
+        event.preventDefault()
         fetch('http://localhost:3000/signIn', {
             method: 'post',
             mode: 'cors',
