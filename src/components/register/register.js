@@ -14,7 +14,7 @@ class Register extends React.Component {
 
     onSubmintSignIn = (event) => {
         event.preventDefault()
-        fetch('http://localhost:3000/register', {
+        fetch('https://damp-temple-33318.herokuapp.com/register', {
             method: 'post',
             mode: 'cors',
             headers: {'Content-Type': 'application/json'},

@@ -87,7 +87,7 @@ class App extends Component {
     this.setState({imageURL: this.state.input});
     // This information came from https://github.com/Clarifai/clarifai-javascript/blob/master/src/index.js
     // Face detect Model
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://damp-temple-33318.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -97,7 +97,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://damp-temple-33318.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
