@@ -5,7 +5,6 @@ import Navigation from './components/navigation/navigation';
 import SignIn from './components/sign_in/signin';
 import Register from './components/register/register';
 import Logo from './components/logo/logo';
-import Clarifai from 'clarifai';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceDetection from './components/faceDetection/faceDetection';
 import Rank from './components/rank/rank';
@@ -14,9 +13,7 @@ import particalSettings from './components/particals/particals';
 
 
 
-const app = new Clarifai.App({
- apiKey: '58c062ea6cfa493b9ee3c07a037ac599'
-});
+
 
 const initialState = {
   input: '',
@@ -90,24 +87,29 @@ class App extends Component {
     this.setState({imageURL: this.state.input});
     // This information came from https://github.com/Clarifai/clarifai-javascript/blob/master/src/index.js
     // Face detect Model
-    app.models.predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
-      .then(responce => {
-        if (responce) {
+    fetch('http://localhost:3000/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+      })
+      .then(response => response.json())
+      .then(response => {
+        if (response) {
           fetch('http://localhost:3000/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
               id: this.state.user.id
             })
-          }).then(responce => responce.json())
+          }).then(response => response.json())
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count }))
               
             }).catch(console.log)
         }
-        this.displayFaceBox(this.calculateFaceLocation(responce))
+        this.displayFaceBox(this.calculateFaceLocation(response))
       })
       .catch(TypeError => alert("Oh no! It looks like we can't find a face in this image...")).catch(err => alert(err));
     

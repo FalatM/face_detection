@@ -32,7 +32,7 @@ class SignIn extends React.Component {
                 email: this.state.signInEmail,
                 password: this.state.signInPassword
             })
-        }).then(responce => responce.json())
+        }).then(response => response.json())
             .then(user => {
                 console.log(user);
                 if (user.id){
